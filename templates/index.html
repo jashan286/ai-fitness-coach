@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Fitness Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="public-navbar">
+        <div class="public-brand">
+            <span class="icon-badge badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></span>
+            AI Fitness Coach
+        </div>
+        <div class="public-links">
+            {% if current_user %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}" class="btn-nav">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Your Personal AI Fitness Coach</h1>
+        <p>Track your BMI, calculate your calories, get custom workout plans, and chat with your AI coach — all in one place.</p>
+        {% if current_user %}
+            <a href="{{ url_for('dashboard') }}" class="btn-primary">Go to Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('register') }}" class="btn-primary">Get Started Free</a>
+        {% endif %}
+    </header>
+
+    <section class="features">
+        <div class="feature-card">
+            <span class="icon-badge badge-blue" style="margin: 0 auto 14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/></svg></span>
+            <h3>BMI Calculator</h3>
+            <p>Instantly check your Body Mass Index and understand what it means for your health.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon-badge badge-red" style="margin: 0 auto 14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3 4 4.5 4 8a4 4 0 0 1-8 0c0-1.2.5-2 1-3 .3 1 1 1.5 1.5 1.2C11 7.5 10 6 10 4c1 .5 2 1 2-2Z"/></svg></span>
+            <h3>Calorie Calculator</h3>
+            <p>Get a personalized daily calorie target based on your goals — lose, maintain, or gain.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon-badge badge-teal" style="margin: 0 auto 14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14M3 9h3M18 9h3M3 15h3M18 15h3M6 12h12"/></svg></span>
+            <h3>Workout Plans</h3>
+            <p>Receive a weekly workout routine tailored to your fitness goal.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon-badge badge-purple" style="margin: 0 auto 14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-4-1L3 20l1-5.5A8.38 8.38 0 0 1 3.5 11 8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5Z"/></svg></span>
+            <h3>AI Chatbot</h3>
+            <p>Ask your AI coach about diet, workouts, motivation, and more, anytime.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 AI Fitness Coach. Built with Flask.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

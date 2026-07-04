@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}BMI Calculator - AI Fitness Coach{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>BMI Calculator</h1>
+    <p>Calculate your Body Mass Index and see what it means for your health.</p>
+</div>
+
+<div class="tool-grid">
+    <div class="card">
+        <div class="card-header">
+            <span class="icon-badge badge-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/></svg>
+            </span>
+            <h2>Enter Measurements</h2>
+        </div>
+
+        <form method="POST" action="{{ url_for('bmi') }}">
+            <label for="height">Height (cm)</label>
+            <input type="number" step="0.1" id="height" name="height" placeholder="e.g. 175" required>
+
+            <label for="weight">Weight (kg)</label>
+            <input type="number" step="0.1" id="weight" name="weight" placeholder="e.g. 70" required>
+
+            <button type="submit" class="btn-primary full-width">Calculate BMI</button>
+        </form>
+
+        {% if result %}
+        <div class="result-card">
+            <h3>Your Result</h3>
+            <div class="result-row"><span>BMI</span><span class="result-big">{{ result.bmi }}</span></div>
+            <div class="result-row"><span>Category</span><strong>{{ result.category }}</strong></div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>BMI Categories</h2>
+        </div>
+        <div class="info-list">
+            <div class="info-item info-underweight">
+                <div class="info-label">Below 18.5</div>
+                <div class="info-title">Underweight</div>
+                <div class="info-desc">May indicate malnutrition or other health issues.</div>
+            </div>
+            <div class="info-item info-normal">
+                <div class="info-label">18.5 – 24.9</div>
+                <div class="info-title">Normal</div>
+                <div class="info-desc">Healthy weight range. Maintain your lifestyle!</div>
+            </div>
+            <div class="info-item info-overweight">
+                <div class="info-label">25.0 – 29.9</div>
+                <div class="info-title">Overweight</div>
+                <div class="info-desc">Slightly above healthy range. Diet & exercise help.</div>
+            </div>
+            <div class="info-item info-obese">
+                <div class="info-label">30 and above</div>
+                <div class="info-title">Obese</div>
+                <div class="info-desc">Consult a healthcare professional for guidance.</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

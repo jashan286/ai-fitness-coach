@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - AI Fitness Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="public-navbar">
+        <div class="public-brand">
+            <span class="icon-badge badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></span>
+            <a href="{{ url_for('index') }}">AI Fitness Coach</a>
+        </div>
+        <div class="public-links">
+            <a href="{{ url_for('register') }}">Sign Up</a>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Welcome Back</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('login') }}">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit" class="btn-primary full-width">Log In</button>
+            </form>
+            <p class="auth-switch">Don't have an account? <a href="{{ url_for('register') }}">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html>

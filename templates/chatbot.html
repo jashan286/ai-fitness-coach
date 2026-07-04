@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}AI Chatbot - AI Fitness Coach{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>AI Fitness Chatbot</h1>
+    <p>Ask me anything about fitness, nutrition, and health.</p>
+</div>
+
+<div class="chat-card">
+    <div class="chat-window" id="chat-window">
+        <div class="chat-message bot">
+            <span class="chat-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-4-1L3 20l1-5.5A8.38 8.38 0 0 1 3.5 11 8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5Z"/></svg>
+            </span>
+            <span class="bubble">Hi! I'm your AI fitness assistant. Ask me anything about workouts, nutrition, recovery, or reaching your fitness goals. I'm here to help! 💪</span>
+        </div>
+    </div>
+
+    <form id="chat-form" class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Ask about workouts, nutrition, recovery..." autocomplete="off" required>
+        <button type="submit" class="btn-primary">Send</button>
+    </form>
+</div>
+<p class="chat-hint">AI responses are for informational purposes. Consult a healthcare professional for medical advice.</p>
+{% endblock %}

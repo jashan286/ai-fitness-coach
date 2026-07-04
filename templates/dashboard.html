@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - AI Fitness Coach{% endblock %}
+
+{% block content %}
+<div class="welcome-banner">
+    <h1>Hey, {{ current_user.name }} 👋</h1>
+    <p>"Push yourself because no one else is going to do it for you."</p>
+</div>
+
+{% set bmi_records = recent|selectattr("record_type", "equalto", "bmi")|list %}
+{% set cal_records = recent|selectattr("record_type", "equalto", "calories")|list %}
+{% set workout_records = recent|selectattr("record_type", "equalto", "workout")|list %}
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-top">
+            <span class="icon-badge badge-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/></svg>
+            </span>
+            BMI Records
+        </div>
+        <div class="stat-value">{{ bmi_records|length }}</div>
+        <div class="stat-sub">{% if bmi_records %}Latest: {{ bmi_records[0].summary }}{% else %}No records yet{% endif %}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span class="icon-badge badge-red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3 4 4.5 4 8a4 4 0 0 1-8 0c0-1.2.5-2 1-3 .3 1 1 1.5 1.5 1.2C11 7.5 10 6 10 4c1 .5 2 1 2-2Z"/></svg>
+            </span>
+            Calorie Logs
+        </div>
+        <div class="stat-value">{{ cal_records|length }}</div>
+        <div class="stat-sub">{% if cal_records %}Last: {{ cal_records[0].summary }}{% else %}No records yet{% endif %}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span class="icon-badge badge-teal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-6"/></svg>
+            </span>
+            Workout Plans
+        </div>
+        <div class="stat-value">{{ workout_records|length }}</div>
+        <div class="stat-sub">{% if workout_records %}{{ workout_records[0].summary }}{% else %}No plans yet{% endif %}</div>
+    </div>
+</div>
+
+<div class="section-title">Quick Actions</div>
+<div class="quick-actions-grid">
+    <a href="{{ url_for('bmi') }}" class="quick-action qa-blue">
+        <div class="icon-badge badge-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/></svg>
+        </div>
+        Calculate BMI
+    </a>
+    <a href="{{ url_for('workout') }}" class="quick-action qa-teal">
+        <div class="icon-badge badge-teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14M3 9h3M18 9h3M3 15h3M18 15h3M6 12h12"/></svg>
+        </div>
+        Get Workout Plan
+    </a>
+    <a href="{{ url_for('calories') }}" class="quick-action qa-red">
+        <div class="icon-badge badge-red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3 4 4.5 4 8a4 4 0 0 1-8 0c0-1.2.5-2 1-3 .3 1 1 1.5 1.5 1.2C11 7.5 10 6 10 4c1 .5 2 1 2-2Z"/></svg>
+        </div>
+        Track Calories
+    </a>
+    <a href="{{ url_for('chatbot') }}" class="quick-action qa-purple">
+        <div class="icon-badge badge-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-4-1L3 20l1-5.5A8.38 8.38 0 0 1 3.5 11 8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5Z"/></svg>
+        </div>
+        AI Chatbot
+    </a>
+</div>
+
+<div class="section-title">Recent Activity</div>
+{% if recent %}
+    <ul class="history-list">
+        {% for r in recent %}
+            <li><span class="tag">{{ r.record_type }}</span> {{ r.summary }} <span class="date">{{ r.created_at.strftime('%b %d, %Y %H:%M') }}</span></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="muted">No activity yet. Try the BMI or Calorie calculator!</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Workout Plan - AI Fitness Coach{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Workout Plan</h1>
+    <p>Generate a personalized weekly routine based on your fitness goal.</p>
+</div>
+
+<div class="card" style="margin-bottom: 24px;">
+    <div class="card-header">
+        <span class="icon-badge badge-teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14M3 9h3M18 9h3M3 15h3M18 15h3M6 12h12"/></svg>
+        </span>
+        <h2>Create Your Plan</h2>
+    </div>
+
+    <form method="POST" action="{{ url_for('workout') }}">
+        <label for="goal">Select your goal</label>
+        <select id="goal" name="goal" required>
+    <option value="lose_weight">Lose Weight</option>
+    <option value="build_muscle">Build Muscle</option>
+    <option value="improve_endurance">Improve Endurance</option>
+    <option value="stay_fit">Stay Fit / General Fitness</option>
+    <option value="flexibility">Flexibility</option>
+</select>
+
+        <button type="submit" class="btn-primary full-width">Generate Plan</button>
+    </form>
+</div>
+
+{% if plan %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ plan.title }}</h2>
+    </div>
+    {% for day, exercises in plan.days %}
+        <div class="workout-day">
+            <h4>{{ day }}</h4>
+            <ul>
+                {% for ex in exercises %}
+                    <li>{{ ex }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
