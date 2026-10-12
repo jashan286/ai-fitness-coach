@@ -23,8 +23,12 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-key-change-m
 # running on your own PC, where DATABASE_URL isn't set.
 database_url = os.environ.get("DATABASE_URL")
 if database_url:
+    # Force the psycopg2 driver (the one in requirements.txt). Newer SQLAlchemy
+    # versions default plain "postgresql://" to psycopg v3, which isn't installed.
     if database_url.startswith("postgres://"):
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
+        database_url = database_url.replace("postgres://", "postgresql+psycopg2://", 1)
+    elif database_url.startswith("postgresql://"):
+        database_url = database_url.replace("postgresql://", "postgresql+psycopg2://", 1)
     app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(BASE_DIR, 'fitness.db')}"
