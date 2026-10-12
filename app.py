@@ -40,9 +40,10 @@ db = SQLAlchemy(app)
 # Get a free key at: https://console.groq.com/keys (no credit card needed)
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "gsk_your-actual-groq-key-here")
 
-# Model used for the chatbot. llama-3.3-70b-versatile is a strong free
-# general-purpose model on Groq's free tier.
-GROQ_MODEL = "llama-3.3-70b-versatile"
+# Model used for the chatbot. llama-3.3-70b-versatile was shut down by Groq
+# (404 model_not_found), so we use openai/gpt-oss-120b. You can override it
+# without editing code by setting a GROQ_MODEL environment variable on Render.
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
 
 groq_client = None
 if GROQ_API_KEY and not GROQ_API_KEY.startswith("gsk_your-actual"):
@@ -489,7 +490,8 @@ def api_chatbot():
     try:
         response = groq_client.chat.completions.create(
             model=GROQ_MODEL,
-            max_tokens=400,
+            # gpt-oss models spend some tokens "thinking", so leave headroom.
+            max_tokens=1500,
             messages=groq_messages,
         )
         reply = response.choices[0].message.content
